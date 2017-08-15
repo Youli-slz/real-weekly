@@ -123,8 +123,8 @@ export default {
   .admin-content:after,.admin-content::before{content: '';display: table}
   .admin-slider{width: 200px;float: left;position: static;height: 100%}
   .admin-slider>ul{height: 100%}
-  .el-menu--horizontal .top{float: right}
+  .el-menu--horizontal .top{float: right !important}
   .admin-container{display: flex;padding:20px;height: 100%;overflow-y: scroll;}
   .header{position: fixed;top: 0;width: 100%;left:0;z-index:2000}
-  .main{height: 100%;padding-top: 60px}
+  .main{position: relative; height: 100%;}
 </style>
