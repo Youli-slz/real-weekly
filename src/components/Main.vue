@@ -126,5 +126,5 @@ export default {
   .el-menu--horizontal .top{float: right}
   .admin-container{display: flex;padding:20px;height: 100%;overflow-y: scroll;}
   .header{position: fixed;top: 0;width: 100%;left:0;z-index:2000}
-  .main{position: relative;height: 100%;padding-top: 60px}
+  .main{height: 100%;padding-top: 60px}
 </style>
