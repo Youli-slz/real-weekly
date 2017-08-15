@@ -2,7 +2,7 @@
   <div class="upweekly">
     <el-form ref="form" :model="form" label-width="80px">
       <el-form-item label="是否隐藏">
-        <el-switch on-value="0" off-value="1" on-color="#13ce66" off-color="#ff4949" v-model="form.status"></el-switch>
+        <el-switch on-color="#13ce66" off-color="#ff4949" v-model="form.status"></el-switch>
       </el-form-item>
       <el-form-item label="周刊标题">
         <el-input v-model="form.title"></el-input>
@@ -26,7 +26,7 @@ export default {
       form: {
         title: '',
         weeks: '',
-        status: null
+        status: false
       }
     }
   },
@@ -36,6 +36,7 @@ export default {
     },
     onSubmint: function () {
       var self = this;
+      var status = this.form.status == true? 0: 1;
       var weekid = Number.parseInt(this.$route.params.id);
       var zhouqishu = new Date(this.form.weeks).getTime() / 1000;
       if(this.form.title == '' || this.form.weeks == ''){
@@ -49,7 +50,7 @@ export default {
             id: weekid,
             title: this.form.title,
             weeks: zhouqishu,
-            status: Number.parseInt(this.form.status)
+            status: status
           }
         })
           .then(function (res) {
@@ -79,7 +80,7 @@ export default {
           if (data.code == 0) {
             self.form.title = data.data.title;
             self.form.weeks = data.data.weeks;
-            self.form.status = data.data.status;
+            self.form.status = data.data.status == 0? true: false;
           }
           else {
             console.log(data.msg);

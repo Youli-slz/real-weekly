@@ -2,7 +2,7 @@
     <div class="upcarousels">
         <el-form ref="form" :model="form" label-width="80px">
             <el-form-item label="是否隐藏">
-               <el-switch on-value="0" off-value="1" on-color="#13ce66" off-color="#ff4949" v-model="form.status" ></el-switch>
+               <el-switch  on-color="#13ce66" off-color="#ff4949" v-model="form.status" ></el-switch>
             </el-form-item>
             <el-form-item label="跳转链接">
                 <el-input v-model="form.url"></el-input>
@@ -36,7 +36,7 @@ export default {
             form:{
                 pic_url: '',
                 url: '',
-                status: null
+                status: false
             }
         }
     },
@@ -46,6 +46,8 @@ export default {
         },
         onSubmit:function() {
             var self = this;
+            console.log(this.form);
+            var status = this.form.status == true? 0 : 1
             var id = Number.parseInt(this.$route.params.id);
             this.axios.post(host.data,{
                 action_name: "update_carousels",
@@ -53,7 +55,7 @@ export default {
                     id: id,
                     pic_url: this.form.pic_url,
                     url: this.form.url,
-                    status: this.form.status
+                    status: status
                 }
             })
             .then(function(res){
@@ -137,12 +139,13 @@ export default {
                 if(data.code == 0){
                     self.form.pic_url = data.data.pic_url;
                     self.form.url = data.data.url;
-                    self.form.status = data.data.status;
+                    self.form.status = data.data.status == 0 ? true : false;
                 }
                 else{
                     console.log(data.msg);
                 }
             })
+            console.log(this.form);
         }
     },
     created() {

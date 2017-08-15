@@ -71,7 +71,7 @@
         <el-dialog title="更新书籍" v-model="showUpdate">
             <el-form ref="form" :model="form" label-width="80px">
                 <el-form-item label="是否隐藏">
-                    <el-switch on-value="0" off-value="1" on-color="#13ce66" off-color="#ff4949" v-model="form.status"></el-switch>
+                    <el-switch  on-color="#13ce66" off-color="#ff4949" v-model="form.status"></el-switch>
                 </el-form-item>
                 <el-form-item label="周刊标题">
                     <el-input v-model="form.title"></el-input>
@@ -120,7 +120,7 @@ export default {
                     var data = res.data;
                     if (data.code == 0) {
                         self.form.title = data.data.title;
-                        self.form.status = data.data.status;
+                        self.form.status = data.data.status == 0? true: false;
                     }
                     else {
                         console.log(data.msg);
@@ -129,13 +129,14 @@ export default {
         },
         onSubmit:function(){
             var self = this;
+            var status = this.form.status == true? 0 : 1;
             var weekid = Number.parseInt(this.$route.params.id);
             this.axios.post(host.data, {
                 action_name: 'update_book',
                 data: {
                 id: weekid,
                 title: this.form.title,
-                status: Number.parseInt(this.form.status)
+                status: status
                 }
             })
                 .then(function (res) {
