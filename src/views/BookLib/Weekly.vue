@@ -12,7 +12,7 @@
           </template>
         </el-table-column>
   
-        <el-table-column align="center" label="书籍名称" width="300">
+        <el-table-column align="center" label="书籍名称" width="200">
           <template scope="scope">
             <span>{{ scope.row.title}}</span>
           </template>
@@ -29,16 +29,16 @@
             {{ ishidden(scope.row.status) }}
           </template>
         </el-table-column>
-  
+
+        <el-table-column min-width="200" align="center" label="书本链接">
+          <template scope="scope">
+            <span>{{ scope.row.linkurl }}</span>
+          </template>
+        </el-table-column>
+
         <el-table-column min-width="200" align="center" label="更新时间">
           <template scope="scope">
             <span>{{ scope.row.update_time }}</span>
-          </template>
-        </el-table-column>
-  
-        <el-table-column min-width="200px" align="center" label="创建时间">
-          <template scope="scope">
-            <span>{{ scope.row.create_time }}</span>
           </template>
         </el-table-column>
   
@@ -130,7 +130,11 @@ export default {
           if (data.code == 0) {
             self.totalpage = data.data.count;
             self.weeklist = data.data.list;
+            for(var i=0; i< self.weeklist.length; i++){
+              self.$set(self.weeklist[i], 'linkurl', "http://dushu.duobb.cn/index.html?Hs=1&WNum=" + self.weeklist[i].id)
+            }
           }
+          console.log(self.weeklist);
         })
         .catch(function (err) {
           console.log(err);

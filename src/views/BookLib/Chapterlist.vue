@@ -12,7 +12,7 @@
                     </template>
                 </el-table-column>
     
-                <el-table-column align="center" label="标题" width="100">
+                <el-table-column align="center" label="标题" width="200">
                     <template scope="scope">
                         <span>{{ scope.row.title}}</span>
                     </template>
@@ -30,7 +30,7 @@
                     </template>
                 </el-table-column>
 
-                <el-table-column width="130" align="center" label="跳转链接">
+                <el-table-column width="230" align="center" label="跳转链接">
                     <template scope="scope">
                         {{ scope.row.url }}
                     </template>
@@ -48,13 +48,7 @@
                     </template>
                 </el-table-column>
     
-                <el-table-column min-width="200px" align="center" label="创建时间">
-                    <template scope="scope">
-                        <span>{{ scope.row.create_time }}</span>
-                    </template>
-                </el-table-column>
-    
-                <el-table-column align="center" label="操作" width="200">
+                <el-table-column align="center" label="操作" width="100">
                     <template scope="scope">
                         <el-button type="primary" @click='update(scope.row.id)' size="small" class="el-icon-edit">更新</el-button>
                     </template>

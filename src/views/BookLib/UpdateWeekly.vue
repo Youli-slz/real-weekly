@@ -79,7 +79,6 @@ export default {
           var data = res.data;
           if (data.code == 0) {
             self.form.title = data.data.title;
-            self.form.weeks = data.data.weeks;
             self.form.status = data.data.status == 0? true: false;
           }
           else {
