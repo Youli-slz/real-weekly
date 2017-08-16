@@ -12,13 +12,13 @@
           </template>
         </el-table-column>
   
-        <el-table-column align="center" label="期数" width="300">
+        <el-table-column align="center" label="书籍名称" width="300">
           <template scope="scope">
             <span>{{ scope.row.title}}</span>
           </template>
         </el-table-column>
   
-        <el-table-column width="200" align="center" label="编号">
+        <el-table-column width="200" align="center" label="期数">
           <template scope="scope">
             <span>{{ scope.row.weeks }}</span>
           </template>
