@@ -41,7 +41,7 @@ export default new Router({
           name: '书籍列表'
         },
         {
-          path: '/chapterlist/:id',
+          path: '/chapterlist/:id/:weekid',
           component: require('../views/BookLib/Chapterlist'),
           name: '章节列表'
         },

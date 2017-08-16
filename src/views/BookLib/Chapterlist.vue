@@ -1,7 +1,8 @@
 <template>
     <div class="chapterlist">
         <div style="width: 400px;padding: 10px">
-            <el-button type="primary" size="small" @click="goAdd()" style="margin-bottom: 10px">创建章节</el-button>
+            <el-button type="primary" size="small" @click="goAdd()" style="margin-bottom: 10px;">创建章节</el-button>
+            <el-button type="primary" size="small" @click="goback()" style="magin-bottom: 10px;">返回</el-button>
         </div>
         <template>
             <el-table :data="Chapterlist" v-loading.body="listLoading" border fit highlight-curretitnt-row style="width: 100%">
@@ -78,6 +79,10 @@ export default {
         }
     },
     methods: {
+        goback:function(){
+            var weekid = Number.parseInt(this.$route.params.weekid);
+            this.$router.push({name: '书籍列表', params:{id: weekid}});
+        },
         update: function(val){
             var book_id = Number.parseInt(this.$route.params.id);
             this.$router.push({name: '更新章节',params:{articleid: val,bookid: book_id}});

@@ -2,6 +2,7 @@
     <div class="booklist">
         <div style="width: 400px;padding: 10px">
             <el-button type="primary" size="small" @click="showAdd = true" style="margin-bottom: 10px">创建书籍</el-button>
+            <el-button type="primary" size="small" @click="goback" style="margin-bottom: 10px;">返回</el-button>
         </div>
         <template>
             <el-table :data="Booklist" v-loading.body="listLoading" border fit highlight-curretitnt-row style="width: 100%">
@@ -39,7 +40,7 @@
                 <el-table-column align="center" label="操作" width="200">
                     <template scope="scope">
                         <el-button type="primary" @click='update(scope.row.id)' size="small" class="el-icon-edit">更新</el-button>
-                        <el-button type="primary" @click="gobooklist(scope.row.id)" size="small" class="el-icon-document">详情</el-button>
+                        <el-button type="primary" @click="gochapterlist(scope.row.id)" size="small" class="el-icon-document">详情</el-button>
                     </template>
                 </el-table-column>
     
@@ -107,6 +108,9 @@ export default {
         }
     },
     methods: {
+        goback:function(){
+            this.$router.push('/weekly');
+        },
         update: function (val) {
             var self = this;
             this.showUpdate = true;
@@ -152,8 +156,9 @@ export default {
                 }
                 })
         },
-        gobooklist: function (val) {
-            this.$router.push({ name: '章节列表', params: { id: val } });
+        gochapterlist: function (val) {
+            var weekss = Number.parseInt(this.$route.params.id);
+            this.$router.push({name: '章节列表',params:{id: val,weekid: weekss}});
         },
         ishidden: function (val) {
             return val == 1 ? '显示' : '隐藏'
