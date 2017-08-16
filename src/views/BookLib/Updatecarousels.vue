@@ -7,6 +7,9 @@
             <el-form-item label="跳转链接">
                 <el-input v-model="form.url"></el-input>
             </el-form-item>
+            <el-form-item label="图片标题">
+                <el-input v-model="form.description"></el-input>
+            </el-form-item>
             <el-form-item label="图片">
                 <div id="containerimg">
                     <label class="el-button el-button--primary el-button--small">
@@ -36,6 +39,7 @@ export default {
             form:{
                 pic_url: '',
                 url: '',
+                description: '',
                 status: false
             }
         }
@@ -55,6 +59,7 @@ export default {
                     id: id,
                     pic_url: this.form.pic_url,
                     url: this.form.url,
+                    description: this.form.description,
                     status: status
                 }
             })
@@ -139,6 +144,7 @@ export default {
                 if(data.code == 0){
                     self.form.pic_url = data.data.pic_url;
                     self.form.url = data.data.url;
+                    self.form.description = data.data.description;
                     self.form.status = data.data.status == 0 ? true : false;
                 }
                 else{

@@ -14,6 +14,12 @@
             </div>
         </div>
         <div style="margin-bottom:20px;">
+            <label>图片标题:</label>
+        </div>
+        <div style="margin-bottom:20px;">
+            <el-input type="text" v-model="description" style="width:600px;"></el-input>
+        </div>
+        <div style="margin-bottom:20px;">
             <label>跳转链接:</label>
         </div>
         <div style="margin-bottom:20px;">
@@ -32,7 +38,8 @@ export default {
     data() {
         return {
             picurl: '',
-            linkurl: ''
+            linkurl: '',
+            description: ''
         }
     },
     methods: {
@@ -46,6 +53,7 @@ export default {
                 data: {
                     pic_url: this.picurl,
                     url: this.linkurl,
+                    description: this.description,
                     type: 1
                 }
             })

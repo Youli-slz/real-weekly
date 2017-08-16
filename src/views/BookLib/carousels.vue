@@ -6,37 +6,43 @@
         <template>
             <el-table :data="carouselist" v-loading.body="listLoading" border fit highlight-current-row  style="width: 100%">
     
-                <el-table-column align="center" label="序号" width="80">
+                <el-table-column align="center" label="id" width="60">
                     <template scope="scope">
                         <span>{{scope.row.id}}</span>
                     </template>
                 </el-table-column>
     
-                <el-table-column  align="center" label="图片" width="300">
+                <el-table-column  align="center" label="图片" width="200">
                     <template scope="scope">
                         <img :src="scope.row.pic_url" width="150" />
                     </template>
                 </el-table-column>
+
+                <el-table-column  align="center" label="图片标题" width="200">
+                    <template scope="scope">
+                        <span>{{ scope.row.description }}</span>
+                    </template>
+                </el-table-column>
     
-                <el-table-column width="200" align="center" label="跳转链接">
+                <el-table-column width="180" align="center" label="跳转链接">
                     <template scope="scope">
                         <span>{{ scope.row.url }}</span>
                     </template>
                 </el-table-column>
     
-                <el-table-column width="180" align="center" label="状态">
+                <el-table-column width="80" align="center" label="状态">
                     <template scope="scope"> 
                         {{ scope.row.ishidden }}
                     </template>
                 </el-table-column>
     
-                <el-table-column min-width="200" align="center" label="更新时间">
+                <el-table-column min-width="180" align="center" label="更新时间">
                     <template scope="scope">
                         <span>{{ scope.row.update_time }}</span>
                     </template>
                 </el-table-column>
     
-                <el-table-column min-width="200px" align="center" label="创建时间">
+                <el-table-column min-width="180px" align="center" label="创建时间">
                     <template scope="scope">
                         <span>{{ scope.row.create_time }}</span>
                     </template>
