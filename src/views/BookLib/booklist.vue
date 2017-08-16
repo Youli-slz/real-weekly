@@ -52,7 +52,7 @@
         <el-dialog title="新增书籍" v-model="showAdd">
             <el-row :gutter="20" style="margin-bottom:20px;">
                 <el-col :span="4">
-                    <label>周刊标题:</label>
+                    <label>书籍标题:</label>
                 </el-col>
                 <el-col :span="20">
                     <el-input type="text" v-model="newtitle"></el-input>
@@ -73,7 +73,7 @@
                 <el-form-item label="是否隐藏">
                     <el-switch  on-color="#13ce66" off-color="#ff4949" v-model="form.status"></el-switch>
                 </el-form-item>
-                <el-form-item label="周刊标题">
+                <el-form-item label="书籍标题">
                     <el-input v-model="form.title"></el-input>
                 </el-form-item>
                 <el-form-item>
