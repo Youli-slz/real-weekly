@@ -13,9 +13,15 @@
                     </template>
                 </el-table-column>
     
-                <el-table-column align="center" label="标题" width="300">
+                <el-table-column align="center" label="书籍名称" width="200">
                     <template scope="scope">
                         <span>{{ scope.row.title}}</span>
+                    </template>
+                </el-table-column>
+
+                <el-table-column align="center" label="书籍链接" width="200">
+                    <template scope="scope">
+                        <span>{{ scope.row.linkurl}}</span>
                     </template>
                 </el-table-column>
     
@@ -72,7 +78,7 @@
         <el-dialog title="更新书籍" v-model="showUpdate">
             <el-form ref="form" :model="form" label-width="80px">
                 <el-form-item label="是否隐藏">
-                    <el-switch  on-color="#13ce66" off-color="#ff4949" v-model="form.status"></el-switch>
+                    <el-switch on-color="#13ce66" off-color="#ff4949" v-model="form.status"></el-switch>
                 </el-form-item>
                 <el-form-item label="书籍标题">
                     <el-input v-model="form.title"></el-input>
@@ -108,7 +114,7 @@ export default {
         }
     },
     methods: {
-        goback:function(){
+        goback: function () {
             this.$router.push('/weekly');
         },
         update: function (val) {
@@ -124,41 +130,41 @@ export default {
                     var data = res.data;
                     if (data.code == 0) {
                         self.form.title = data.data.title;
-                        self.form.status = data.data.status == 0? true: false;
+                        self.form.status = data.data.status == 0 ? true : false;
                     }
                     else {
                         console.log(data.msg);
                     }
                 })
         },
-        onSubmit:function(){
+        onSubmit: function () {
             var self = this;
-            var status = this.form.status == true? 0 : 1;
+            var status = this.form.status == true ? 0 : 1;
             var weekid = Number.parseInt(this.$route.params.id);
             this.axios.post(host.data, {
                 action_name: 'update_book',
                 data: {
-                id: weekid,
-                title: this.form.title,
-                status: status
+                    id: weekid,
+                    title: this.form.title,
+                    status: status
                 }
             })
                 .then(function (res) {
-                var data = res.data;
-                if (data.code == 0) {
-                    self.$message('更新成功');
-                    self.showUpdate = false;
-                    self.getbooklist(1);
-                }
-                else {
-                    self.$message("更新失败");
-                    console.log(data.msg);
-                }
+                    var data = res.data;
+                    if (data.code == 0) {
+                        self.$message('更新成功');
+                        self.showUpdate = false;
+                        self.getbooklist(1);
+                    }
+                    else {
+                        self.$message("更新失败");
+                        console.log(data.msg);
+                    }
                 })
         },
         gochapterlist: function (val) {
             var weekss = Number.parseInt(this.$route.params.id);
-            this.$router.push({name: '章节列表',params:{id: val,weekid: weekss}});
+            this.$router.push({ name: '章节列表', params: { id: val, weekid: weekss } });
         },
         ishidden: function (val) {
             return val == 1 ? '显示' : '隐藏'
@@ -182,6 +188,9 @@ export default {
                     if (data.code == 0) {
                         self.totalpage = data.count;
                         self.Booklist = data.data.list;
+                        for (var i = 0; i < self.Booklist.length; i++) {
+                            self.$set(self.Booklist[i], 'linkurl', "http://dushu.duobb.cn/index.html?Hs=1&WNum=" + self.Booklist[i].id)
+                        }
                     }
                 })
                 .catch(function (err) {
