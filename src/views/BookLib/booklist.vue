@@ -84,7 +84,7 @@
                     <el-input v-model="form.title"></el-input>
                 </el-form-item>
                 <el-form-item>
-                    <el-button type="primary" @click="onSubmit">提交</el-button>
+                    <el-button type="primary" @click="onSubmit(form.id)">提交</el-button>
                     <el-button @click="showUpdate = false">取消</el-button>
                 </el-form-item>
             </el-form>
@@ -108,6 +108,7 @@ export default {
             newtitle: '',
             showUpdate: false,
             form: {
+                id: null,
                 title: '',
                 status: null
             }
@@ -129,6 +130,7 @@ export default {
                 .then(function (res) {
                     var data = res.data;
                     if (data.code == 0) {
+                        self.form.id = data.data.id;
                         self.form.title = data.data.title;
                         self.form.status = data.data.status == 0 ? true : false;
                     }
@@ -137,14 +139,14 @@ export default {
                     }
                 })
         },
-        onSubmit: function () {
+        onSubmit: function (val) {
             var self = this;
             var status = this.form.status == true ? 0 : 1;
-            var weekid = Number.parseInt(this.$route.params.id);
+            // var weekid = Number.parseInt(this.$route.params.id);
             this.axios.post(host.data, {
                 action_name: 'update_book',
                 data: {
-                    id: weekid,
+                    id: Number.parseInt(val),
                     title: this.form.title,
                     status: status
                 }
