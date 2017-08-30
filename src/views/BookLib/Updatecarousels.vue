@@ -10,6 +10,16 @@
             <el-form-item label="图片标题">
                 <el-input v-model="form.description"></el-input>
             </el-form-item>
+            <el-form-item label="图片类型">
+                <el-select v-model="form.typeId" placeholder="请选择">
+                    <el-option
+                    v-for="item in options"
+                    :key="item.value"
+                    :label="item.label"
+                    :value="item.value">
+                    </el-option>
+                </el-select>
+            </el-form-item>
             <el-form-item label="图片">
                 <div id="containerimg">
                     <label class="el-button el-button--primary el-button--small">
@@ -40,8 +50,16 @@ export default {
                 pic_url: '',
                 url: '',
                 description: '',
-                status: false
-            }
+                status: false,
+                typeId: null
+            },
+                options:[{
+                    value:1,
+                    label:"全局轮播图"
+                },{
+                    value:2,
+                    label:"书籍轮播图"
+                }]
         }
     },
     methods: {
@@ -60,7 +78,8 @@ export default {
                     pic_url: this.form.pic_url,
                     url: this.form.url,
                     description: this.form.description,
-                    status: status
+                    status: status,
+                    type: Number.parseInt(this.form.typeId)
                 }
             })
             .then(function(res){
@@ -146,6 +165,7 @@ export default {
                     self.form.url = data.data.url;
                     self.form.description = data.data.description;
                     self.form.status = data.data.status == 0 ? true : false;
+                    self.form.typeId = data.data.type;
                 }
                 else{
                     console.log(data.msg);

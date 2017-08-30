@@ -59,6 +59,18 @@ export default new Router({
           path: 'updatebook/:bookid/:weekid',
           component: require('../views/BookLib/UpdateBooklist'),
           name: '更新书籍'
+        },
+        {
+          path: '/bookgroup',
+          component: require('../views/BookLib/BookGroup')
+        },
+        {
+          path: '/addgroup',
+          component: require('../views/BookLib/AddGroup')
+        },{
+          path: '/updategroup/:id',
+          component: require('../views/BookLib/UpdateGroup'),
+          name: '更新分组配置'
         }
       ]
     }

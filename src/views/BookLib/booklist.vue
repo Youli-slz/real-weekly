@@ -1,7 +1,7 @@
 <template>
     <div class="booklist">
         <div style="width: 400px;padding: 10px">
-            <el-button type="primary" size="small" @click="showAdd = true" style="margin-bottom: 10px">创建书籍</el-button>
+            <el-button type="primary" size="small" @click="gettypelist,showAdd = true" style="margin-bottom: 10px">创建书籍</el-button>
             <el-button type="primary" size="small" @click="goback" style="margin-bottom: 10px;">返回</el-button>
         </div>
         <template>
@@ -43,7 +43,7 @@
                     </template>
                 </el-table-column>
     
-                <el-table-column align="center" label="操作" width="200">
+                <el-table-column align="center" label="操作" width="200" fixed="right">
                     <template scope="scope">
                         <el-button type="primary" @click='update(scope.row.id)' size="small" class="el-icon-edit">更新</el-button>
                         <el-button type="primary" @click="gochapterlist(scope.row.id)" size="small" class="el-icon-document">详情</el-button>
@@ -65,6 +65,17 @@
                     <el-input type="text" v-model="newtitle"></el-input>
                 </el-col>
             </el-row>
+             <el-row :gutter="20" style="margin-bottom: 20px;">
+                <el-col :span="4">
+                    <label>配置选择</label>
+                </el-col>
+                <el-col :span="20">
+                    <el-select v-model="typeId" placeholder="请选择配置">
+                        <el-option v-for="item in typeList" :key="item.id" :label="item.title" :value="item.id">
+                        </el-option>
+                    </el-select>
+                </el-col>
+            </el-row> 
             <el-row type="flex" justify="center">
                 <el-col :span="6">
                     <el-button type="primary" @click="createBooks">确定</el-button>
@@ -82,6 +93,12 @@
                 </el-form-item>
                 <el-form-item label="书籍标题">
                     <el-input v-model="form.title"></el-input>
+                </el-form-item>
+                <el-form-item label="配置选择">
+                    <el-select v-model="UtypeId" placeholder="请选择配置">
+                        <el-option v-for="item in typeList" :key="item.id" :label="item.title" :value="item.id">
+                        </el-option>
+                    </el-select>
                 </el-form-item>
                 <el-form-item>
                     <el-button type="primary" @click="onSubmit(form.id)">提交</el-button>
@@ -111,7 +128,10 @@ export default {
                 id: null,
                 title: '',
                 status: null
-            }
+            },
+            typeId: null,
+            typeList: [],
+            UtypeId: null
         }
     },
     methods: {
@@ -120,6 +140,7 @@ export default {
         },
         update: function (val) {
             var self = this;
+            this.gettypelist();
             this.showUpdate = true;
             this.axios.post(host.data, {
                 action_name: "get_book",
@@ -133,6 +154,7 @@ export default {
                         self.form.id = data.data.id;
                         self.form.title = data.data.title;
                         self.form.status = data.data.status == 0 ? true : false;
+                        self.form.UtypeId = data.data.config_id.toString();
                     }
                     else {
                         console.log(data.msg);
@@ -148,7 +170,8 @@ export default {
                 data: {
                     id: Number.parseInt(val),
                     title: this.form.title,
-                    status: status
+                    status: status,
+                    config_id: Number.parseInt(this.UtypeId)
                 }
             })
                 .then(function (res) {
@@ -211,7 +234,8 @@ export default {
                 action_name: 'create_book',
                 data: {
                     weekly_id: week_id,
-                    title: this.newtitle
+                    title: this.newtitle,
+                    config_id: Number.parseInt(this.typeId)
                 }
             })
                 .then(function (res) {
@@ -226,6 +250,21 @@ export default {
                         console.log(data.msg);
                     }
                 })
+        },
+        gettypelist: function () {
+            var self = this;
+            this.axios.post(host.data, {
+                action_name: "get_article_params_list",
+                data: "get_article_params_list"
+            })
+            .then(function (res){
+                var data = res.data;
+                if(data.code == 0){
+                    self.typeList = data.data;
+                } else {
+                    self.$message("获取失败");
+                }
+            })
         }
     },
     created() {

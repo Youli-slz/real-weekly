@@ -33,12 +33,16 @@
           <span slot="title">导航二</span>
         </el-menu-item> -->
         <el-menu-item index="/carousels">
-          <i class="el-icon-setting"></i>
+          <i class="el-icon-picture"></i>
           <span slot="title">轮播图</span>
         </el-menu-item>
         <el-menu-item index="/weekly">
-          <i class="el-icon-setting"></i>
+          <i class="el-icon-menu"></i>
           <span slot="title">周刊</span>
+        </el-menu-item>
+        <el-menu-item index="/bookgroup">
+          <i class="el-icon-setting"></i>
+          <span solt="title">书籍分组配置</span>
         </el-menu-item>
 
       </el-menu>
@@ -126,5 +130,5 @@ export default {
   .el-menu--horizontal .top{float: right !important}
   .admin-container{display: flex;padding:20px;height: 100%;overflow-y: scroll;}
   .header{position: fixed;top: 0;width: 100%;left:0;z-index:2000}
-  .main{position: relative; height: 100%;}  /*padding-top 在服务器上没有，显示正常*/
+  .main{position: relative; height: 100%;padding-top:60px;}  /*padding-top 在服务器上没有，显示正常*/
 </style>

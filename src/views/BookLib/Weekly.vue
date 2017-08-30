@@ -36,7 +36,7 @@
           </template>
         </el-table-column>
   
-        <el-table-column align="center" label="操作" width="200">
+        <el-table-column align="center" label="操作" width="200" fixed="right">
           <template scope="scope">
             <el-button type="primary" @click='update(scope.row.id)' size="small" class="el-icon-edit">更新</el-button>
             <el-button type="primary" @click="gobooklist(scope.row.id)" size="small" class="el-icon-document">详情</el-button>

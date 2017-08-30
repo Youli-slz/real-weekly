@@ -20,6 +20,19 @@
             <el-input type="text" v-model="description" style="width:600px;"></el-input>
         </div>
         <div style="margin-bottom:20px;">
+            <label>图片类型</label>
+        </div>
+        <div style="margin-bottom:20px;">
+            <el-select v-model="typeId" placeholder="请选择">
+                <el-option
+                v-for="item in options"
+                :key="item.value"
+                :label="item.label"
+                :value="item.value">
+                </el-option>
+            </el-select>
+        </div>
+        <div style="margin-bottom:20px;">
             <label>跳转链接:</label>
         </div>
         <div style="margin-bottom:20px;">
@@ -39,7 +52,15 @@ export default {
         return {
             picurl: '',
             linkurl: '',
-            description: ''
+            description: '',
+            typeId: null,
+            options:[{
+                value:1,
+                label:"全局轮播图"
+            },{
+                value:2,
+                label:"书籍轮播图"
+            }]
         }
     },
     methods: {
@@ -54,7 +75,7 @@ export default {
                     pic_url: this.picurl,
                     url: this.linkurl,
                     description: this.description,
-                    type: 1
+                    type: this.typeId
                 }
             })
             .then(function(res){
