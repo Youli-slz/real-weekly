@@ -60,6 +60,9 @@ export default {
             },{
                 value:2,
                 label:"书籍轮播图"
+            },{
+                value: 3,
+                label: "小程序轮播图"
             }]
         }
     },

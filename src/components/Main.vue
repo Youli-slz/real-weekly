@@ -7,7 +7,7 @@
       </el-submenu>
 
     </el-menu>
-    <div class="main" style="padding-top:0px;">
+    <div class="main">
       <div class="admin-slider">
       <el-menu default-active="1-4-1" class="el-menu-vertical-demo" @open="handleOpen" @close="handleClose" :collapse="isCollapse" @select='handselect'>
         <!-- <el-submenu index="1">
@@ -130,5 +130,5 @@ export default {
   .el-menu--horizontal .top{float: right !important}
   .admin-container{display: flex;padding:20px;height: 100%;overflow-y: scroll;}
   .header{position: fixed;top: 0;width: 100%;left:0;z-index:2000}
-  .main{position: relative; height: 100%;}  /*padding-top 在服务器上没有，显示正常*/
+  .main{position: relative;height: 100%;padding-top: 30px}  /*padding-top 在服务器上没有，显示正常*/
 </style>

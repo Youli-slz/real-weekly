@@ -48,6 +48,6 @@ export default {
 </script>
 
 <style>
-*{padding: 0;margin: 0}
-.main{height: 100%;position: relative}
+ *{padding: 0;margin: 0}
+.main{height: 100%;position: relative} 
 </style>
