@@ -44,6 +44,12 @@
           <i class="el-icon-setting"></i>
           <span solt="title">书籍分组配置</span>
         </el-menu-item>
+        <el-submenu index="2">
+          <template slot="title"><i class="el-icon-menu"></i>微信小程序</template>
+            <el-menu-item-group>
+              <el-menu-item index="/articleORradiolist">电台/美文</el-menu-item>
+            </el-menu-item-group>
+        </el-submenu>
 
       </el-menu>
       </div>

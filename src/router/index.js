@@ -71,6 +71,16 @@ export default new Router({
           path: '/updategroup/:id',
           component: require('../views/BookLib/UpdateGroup'),
           name: '更新分组配置'
+        },{
+          path: '/comment/:id',
+          component: require('../views/mini_programs/comment_list'),
+          name: '评论页面'
+        },{
+          path: '/articleORradiolist',
+          component: require('../views/mini_programs/article_radio_list')
+        },{
+          path:'/addarticleorradio',
+          component: require('../views/mini_programs/adArticleorRadio')
         }
       ]
     }

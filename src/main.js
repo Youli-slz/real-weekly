@@ -9,6 +9,10 @@ import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-default/index.css'
 import './assets/css/common.css'
 import  host  from './base.js'
+import '../static/utf8-jsp/ueditor.config.js'
+import '../static/utf8-jsp/ueditor.all.min.js'
+import '../static/utf8-jsp/lang/zh-cn/zh-cn.js'
+import '../static/utf8-jsp/ueditor.parse.min.js'
 
 Vue.use(VueAxios, axios)
 Vue.use(ElementUI)
