@@ -14,12 +14,6 @@
             </div>
         </div>
         <div style="margin-bottom:20px;">
-            <label>图片标题:</label>
-        </div>
-        <div style="margin-bottom:20px;">
-            <el-input type="text" v-model="description" style="width:600px;"></el-input>
-        </div>
-        <div style="margin-bottom:20px;">
             <label>图片类型</label>
         </div>
         <div style="margin-bottom:20px;">
@@ -32,11 +26,42 @@
                 </el-option>
             </el-select>
         </div>
-        <div style="margin-bottom:20px;">
-            <label>跳转链接:</label>
+        <div v-if="typeId != 3">
+            <div style="margin-bottom:20px;">
+                <label>图片标题:</label>
+            </div>
+            <div style="margin-bottom:20px;">
+                <el-input type="text" v-model="description" style="width:600px;"></el-input>
+            </div>
+            <div style="margin-bottom:20px;">
+                <label>跳转链接:</label>
+            </div>
+            <div style="margin-bottom:20px;">
+                <el-input type="textarea" v-model="linkurl" style="width:600px;"></el-input>
+            </div>
         </div>
-        <div style="margin-bottom:20px;">
-            <el-input type="textarea" v-model="linkurl" style="width:600px;"></el-input>
+        <div v-else>
+            <div style="margin-bottom:20px;">
+                <label>小程序类型</label>
+            </div>
+            <div style="margin-bottom:20px;">
+                <el-select v-model="minatype" placeholder="请选择">
+                    <el-option
+                    v-for="item in type"
+                    :key="item.value"
+                    :label="item.label"
+                    :value="item.value">
+                    </el-option>
+                </el-select>
+                <el-select v-model="pagetypeid" placeholder="请选择">
+                    <el-option
+                    v-for="item in alist"
+                    :key="item.dynamic_id"
+                    :label="item.title"
+                    :value="item.dynamic_id">
+                    </el-option>
+                </el-select>
+            </div>
         </div>
         <div>
         <el-button type="primary" @click="onSubmit">立即提交</el-button>
@@ -53,7 +78,9 @@ export default {
             picurl: '',
             linkurl: '',
             description: '',
-            typeId: null,
+            typeId: 1,
+            minatype: 1,
+            pagetypeid: null,
             options:[{
                 value:1,
                 label:"全局轮播图"
@@ -63,7 +90,25 @@ export default {
             },{
                 value: 3,
                 label: "小程序轮播图"
-            }]
+            }],
+            type:[{
+                value: 1,
+                label: '电台'
+            },{
+                value: 2,
+                label: '文章'
+            }],
+            alist:[]
+        }
+    },
+    watch:{
+        minatype(value, oldval) {
+            this.getlist();
+        },
+        typeId(value, oldval) {
+            if(value == 3) {
+                this.getlist();
+            }
         }
     },
     methods: {
@@ -72,26 +117,50 @@ export default {
         },
         onSubmit:function() {
             var self = this;
-            this.axios.post(host.data,{
-                action_name: "create_carousels",
-                data: {
-                    pic_url: this.picurl,
-                    url: this.linkurl,
-                    description: this.description,
-                    type: this.typeId
-                }
-            })
-            .then(function(res){
-                var data = res.data;
-                if(data.code == 0){
-                    self.$message("创建成功");
-                    self.goback();
-                }
-                else{
-                    self.$message("创建失败");
-                    console.log(data.msg);
-                }
-            })
+            if(this.typeId != 3){
+                this.axios.post(host.data,{
+                    action_name: "create_carousels",
+                    data: {
+                        pic_url: this.picurl,
+                        url: this.linkurl,
+                        description: this.description,
+                        type: this.typeId
+                    }
+                })
+                .then(function(res){
+                    var data = res.data;
+                    if(data.code == 0){
+                        self.$message("创建成功");
+                        self.goback();
+                    }
+                    else{
+                        self.$message("创建失败");
+                        console.log(data.msg);
+                    }
+                })
+            } else {
+                this.axios.post(host.data,{
+                    action_name: "create_carousels",
+                    data: {
+                        pic_url: this.picurl,
+                        url: this.pagetypeid,
+                        description: this.minatype.toString(),
+                        type: this.typeId
+                    }
+                })
+                .then(function(res){
+                    var data = res.data;
+                    if(data.code == 0){
+                        self.$message("创建成功");
+                        self.goback();
+                    }
+                    else{
+                        self.$message("创建失败");
+                        console.log(data.msg);
+                    }
+                })  
+            }
+
         },
         uploadimg2: function () {
             var self = this;
@@ -148,7 +217,26 @@ export default {
                 console.log(self.uptoken);
             }, (response) => {
             });
-        }
+        },
+        getlist: function () {
+            var self = this;
+            this.axios.post(host.data,{
+                action_name: "get_dynamic_list",
+                data: {
+                    type: this.minatype,
+                    page_no: 1,
+                    page_size: 10
+                }
+            })
+            .then(function(res){
+                var data = res.data;
+                console.log(data);
+                if(data.code == 0) {
+                    self.alist = data.data;
+                    console.log(self.alist);
+                }
+            })
+        },
     },
     created() {
         this.getuptoken();

@@ -2,6 +2,8 @@
     <div class="newgroup">
         <div style="margin-bottom:30px;">
             <h2>新增</h2>
+            <el-button type="primary" @click="onSubmit">提交</el-button>
+            <el-button @click="goback">返回</el-button>
         </div>
         <hr style="margin-bottom:30px;" />
         <el-form label-width="80px;" label-position="left">
@@ -53,8 +55,7 @@
             </el-form-item>
         </el-form>
         <div class="operation">
-            <el-button type="primary" @click="onSubmit">提交</el-button>
-            <el-button @click="goback">返回</el-button>
+
         </div>
     </div>
 </template>
