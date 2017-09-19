@@ -52,9 +52,9 @@
 
             <el-table-column label="操作" min-width="80" align="center">
                <template scope="scope">
-                   <el-button type="primary" :disabled="true">更新</el-button>
-                   <el-button @click="confirm(scope.row.dynamic_id)">删除</el-button>
-                   <el-button type="primary" @click="gocomment(scope.row.dynamic_id)">评论</el-button>
+                   <el-button type="primary" size="small" :disabled="true">更新</el-button>
+                   <el-button size="small" @click="confirm(scope.row.dynamic_id)">删除</el-button>
+                   <el-button size="small" type="primary" @click="gocomment(scope.row.dynamic_id)">评论</el-button>
                </template>
             </el-table-column>
           </el-table>

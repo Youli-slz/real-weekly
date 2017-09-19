@@ -1,12 +1,20 @@
 <template>
     <div class="newgroup">
-        <div style="margin-bottom:30px;">
+        <div class="header_name" style="margin-bottom:30px;">
             <h2>新增</h2>
-            <el-button type="primary" @click="onSubmit">提交</el-button>
-            <el-button @click="goback">返回</el-button>
+            <div>
+                <el-button type="primary" @click="onSubmit">提交</el-button>
+                <el-button @click="goback">返回</el-button>
+            </div>
         </div>
         <hr style="margin-bottom:30px;" />
         <el-form label-width="80px;" label-position="left">
+            <el-form-item label="选择创建类型">
+                <el-select v-model="type" placeholder="请选择">
+                    <el-option v-for="item in carousList" :key="item.value" :label="item.label" :value="item.value">
+                    </el-option>
+                </el-select>
+            </el-form-item>
             <el-form-item label="标题">
                 <el-input v-model="title" style="width:400px;"></el-input>
             </el-form-item>
@@ -24,11 +32,8 @@
                     </div>
                 </div>
             </el-form-item>
-            <el-form-item label="选择创建类型">
-                <el-select v-model="type" placeholder="请选择">
-                    <el-option v-for="item in carousList" :key="item.value" :label="item.label" :value="item.value">
-                    </el-option>
-                </el-select>
+            <el-form-item>
+                <el-input v-model="QR_Url" placeholder="图片url链接"></el-input>
             </el-form-item>
             <el-form-item label="美文内容" v-if="type == 2">
                 <label>:</label>
@@ -54,9 +59,9 @@
 
             </el-form-item>
         </el-form>
-        <div class="operation">
+        <!-- <div class="operation">
 
-        </div>
+        </div> -->
     </div>
 </template>
 
@@ -92,7 +97,7 @@ export default {
     methods: {
         onSubmit: function() {
             var self = this;
-            if(self.type == 1) {
+            if (self.type == 1) {
                 self.content = '';
             } else {
                 self.radiocontent = '';
@@ -103,10 +108,10 @@ export default {
                     type: 'success'
                 });
             }
-            if(this.title == '' || this.QR_Url == '') {
+            if (this.title == '' || this.QR_Url == '') {
                 this.$message("请填写完整信息");
             } else {
-                this.axios.post(host.data,{
+                this.axios.post(host.data, {
                     action_name: "add_dynamic",
                     data: {
                         title: self.title,
@@ -116,18 +121,18 @@ export default {
                         voice: self.radiocontent
                     }
                 })
-                .then(function (res){
-                    var data = res.data;
-                    if(data.code == 0) {
-                        self.$message("创建成功");
-                        self.goback();
-                    } else {
-                        self.$message("创建失败");
-                    }
-                })
-                .catch(function (res){
-                    console.log(res);
-                })
+                    .then(function(res) {
+                        var data = res.data;
+                        if (data.code == 0) {
+                            self.$message("创建成功");
+                            self.goback();
+                        } else {
+                            self.$message("创建失败");
+                        }
+                    })
+                    .catch(function(res) {
+                        console.log(res);
+                    })
             }
         },
         goback: function() {
@@ -318,6 +323,14 @@ export default {
 
 #my-mask .mask-inner {
     background: rgba(0, 0, 0, .5);
+}
+
+
+.header_name {
+    display: flex;
+    margin-bottom: 30px;
+    justify-content: space-between;
+    align-items: flex-end;
 }
 </style>
 

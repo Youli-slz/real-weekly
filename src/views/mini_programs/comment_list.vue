@@ -1,6 +1,5 @@
 <template>
   <div class="commentlist">
-    <el-button @click="showreply = true">回复</el-button>
     <el-table :data="comlist" border>
       <el-table-column label="评论id">
         <template scope="scope">
@@ -20,7 +19,7 @@
         </template>
       </el-table-column>
 
-      <el-table-column label="评论内容" min-width="300px;">
+      <el-table-column label="评论内容" min-width="250px;">
         <template scope="scope">
           {{ scope.row.content }}
         </template>
@@ -32,24 +31,24 @@
         </template>
       </el-table-column>
 
-      <el-table-column label="作者回复">
+       <el-table-column label="作者回复">
         <template scope="scope">
-          <div v-if="scope.row.comments == ''">
-            <el-button @click="showreply = true, commentid = scope.row.comment_id">回复</el-button>
+          <div v-if="scope.row.comments == null">
+            <el-button @click="showdialog(scope.row.comment_id)">回复</el-button>
           </div>
           <div v-else>
             {{ scope.row.comments }}
           </div>
         </template>
-      </el-table-column>
+      </el-table-column> 
     </el-table>
 
-    <el-dialog title="作者回复" :visible.sync="showreply">
+     <el-dialog title="作者回复" v-model="showreply">
       <el-input type="textarea" :rows="10" placeholder="回复内容" v-model="authorReply"></el-input>
       <div class="submit">
         <el-button type="primary" @click="onSubmit">提交</el-button>
       </div>
-    </el-dialog>
+    </el-dialog> 
   </div>
 </template>
 
@@ -66,26 +65,31 @@ export default {
     }
   },
   methods: {
-    getlist: function () {              // 获取评论列表
+    showdialog: function(val) {
+      this.showreply = true;
+      this.commentid = val;
+    },
+    getlist: function () {
       var self = this;
-
       var id = Number.parseInt(this.$route.params.id);
-
       this.axios.post(host.data,{
-        action_name: 'get_comment_list',
-          data: {
-          dynamic_id: id,                //单个文章或电台的唯一ID
+        action_name:　'get_comment_list',
+        data: {
+          dynamic_id: id,
           page_no: 1,
-          page_size: 100 
+          page_size: 100
         }
       })
-      .then(function (res){
+      .then(function(res){
         var data = res.data;
+        self.comlist = [];
         if(data.code == 0) {
-          self.comlist = data.data;
+          for(var x in data.data) {
+            self.comlist.push(data.data[x]);
+          }
+          console.log(self.comlist)
         }
       })
-
     },
     formate: function(t) {                   // 时间戳格式化
       var d = new Date(t * 1000);
@@ -100,36 +104,47 @@ export default {
     init: function(d) {
       return d > 9 ? d : "0" + d;
     },
-    onSubmit: function () {
+    onSubmit: function() {
       var self = this;
-      if(this.authorReply == '') {
+      var id = Number.parseInt(this.$route.params.id);
+      if (this.authorReply == '') {
         this.$message("填写回复内容")
-        return false ;
+        return false;
       } else {
-        this.axios.post(host.data,{
-          dynamic_id: id,
-          content: self.authorReply,
-          type: 2,
-          parent_id: self.commentid
+        this.axios.post(host.data, {
+          action_name: 'add_comment',
+          data: {
+            dynamic_id: id,
+            content: self.authorReply,
+            type: 2,
+            parent_id: Number.parseInt(self.commentid)
+          }
+
         })
-        .then(function(res){
-           console.log(res.data);
-        })
+          .then(function(res) {
+            var data = res.data;
+            if(data.code == 0) {
+              self.$message('回复成功');
+              self.showreply = false;
+              self.getlist();
+            }
+          })
       }
     }
   },
-  created(){
+  created() {
     this.getlist();
   }
 }
 </script>
 
 <style>
-.commentlist{
+.commentlist {
   width: 100%;
   padding-bottom: 20px;
 }
-.submit{
+
+.submit {
   display: flex;
   justify-content: center;
   margin-top: 20px;
