@@ -49,5 +49,5 @@ export default {
 
 <style>
  *{padding: 0;margin: 0}
-.main{height: 100%;position: relative; margin-bottom: 100px;} 
+.main{height: 100%;position: relative;} 
 </style>

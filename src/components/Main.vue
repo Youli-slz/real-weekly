@@ -134,7 +134,7 @@ export default {
   .admin-slider{width: 200px;float: left;position: static;height: 100%}
   .admin-slider>ul{height: 100%}
   .el-menu--horizontal .top{float: right !important}
-  .admin-container{display: flex;padding:20px;height: 100%;overflow-y: scroll;}
+  .admin-container{display: flex;padding:20px;height: 88%;overflow-y: scroll;}
   .header{position: fixed;top: 0;width: 100%;left:0;z-index:2000}
   .main{position: relative;height: 100%;}  /*padding-top 在服务器上没有，显示正常*/
 </style>
