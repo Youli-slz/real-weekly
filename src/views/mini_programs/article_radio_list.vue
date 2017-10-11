@@ -171,6 +171,6 @@ export default {
     margin-bottom: 20px;
 }
 .page_list{
-    margin-bottom:100px;
+    /* margin-bottom:100px; */
 }
 </style>
