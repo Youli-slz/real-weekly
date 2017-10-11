@@ -13,7 +13,7 @@
           <el-button type="primary" @click="add()">创 建</el-button>
       </div>
       <div class="page_list">
-          <el-table :data="alist" stripe border style="width: 100%;">
+          <el-table :data="alist"  border style="width: 100%;">
             <el-table-column label="id" width="80" align="center">
                <template scope="scope">
                    {{ scope.row.dynamic_id }}
@@ -169,5 +169,8 @@ export default {
 }
 .page_header{
     margin-bottom: 20px;
+}
+.page_list{
+    margin-bottom:100px;
 }
 </style>
