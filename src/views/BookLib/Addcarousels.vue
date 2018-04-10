@@ -210,7 +210,7 @@ export default {
         },
         getuptoken: function () {
             var self = this;
-            this.axios.get('http://wxmp.gatao.cn/mypic/gettoken').then((response) => {
+            this.axios.get('http://wxmpx.gatao.cn/mypic/gettoken').then((response) => {
                 var data = response.data;
                 self.uptoken = data.token;
                 self.uploadimg2();
